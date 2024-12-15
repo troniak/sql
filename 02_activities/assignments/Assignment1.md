@@ -105,27 +105,8 @@ Please do not pick the exact same tables that I have already diagrammed. For exa
 	- <img src="./images/01_farmers_market_conceptual_model.png" width="600">
 - The column names can be found in a few spots (DB Schema window in the bottom right, the Database Structure tab in the main window by expanding each table entry, at the top of the Browse Data tab in the main window)
 
-```mermaid
-erDiagram
-    product {
-        int product_id PK
-        text product_name
-        text product_size
-        text product_qty_type
-    }
-
-    customer_purchases {
-        int customer_purchase_id PK
-        int customer_id FK
-        int vendor_id FK
-        int product_id FK
-        text market_date
-        decimal quantity
-        decimal cost_to_customer_per_qty
-    }
-
-    product.product_id ||--o{ customer_purchases.product_id : "inf"
-```
+Logical Data Model:
+<img src="./images/logmod.png" width="600">
 
 ***
 
