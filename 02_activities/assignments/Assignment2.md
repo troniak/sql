@@ -45,18 +45,172 @@ There are several tools online you can use, I'd recommend [Draw.io](https://www.
 
 **HINT:** You do not need to create any data for this prompt. This is a conceptual model only. 
 
+```mermaid
+erDiagram
+    employee {
+        int employee_id PK
+        decimal salary
+        int reports_to_id FK
+        string first_name
+        string last_name
+    }
+
+    orders {
+        int order_id PK
+        datetime order_datetime
+        int book_id FK
+        int customer_id FK
+        int employee_id FK
+        decimal total_amount
+    }
+
+    sales {
+        int sale_id PK
+        int order_id FK
+        decimal amount
+        datetime transaction_datetime
+        string payment_method
+    }
+
+    customer {
+        int customer_id PK
+        string first_name
+        string last_name
+        string phone_number
+    }
+
+    book {
+        int book_id PK
+        string title
+        string author
+        decimal price
+        string isbn
+        int quantity_in_stock
+    }
+
+    date_dim {
+        date date_id PK
+        int year
+        int month
+        int day
+        string day_of_week
+        int quarter
+        boolean is_weekend
+        boolean is_holiday
+        string season
+    }
+
+    employee ||--o{ employee : "reports_to"
+    book ||--o{ orders : "has"
+    customer ||--o{ orders : "places"
+    employee ||--o{ orders : "processes"
+    orders ||--o{ sales : "generates"
+```
+
 #### Prompt 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
+
+```mermaid
+erDiagram
+    employee {
+        int employee_id PK
+        decimal salary
+        int reports_to_id FK
+        string first_name
+        string last_name
+    }
+
+    employee_shifts{
+        int employee_id PK,FK
+        date shift_date PK,FK
+        boolean morning PK,FK
+    }
+
+    orders {
+        int order_id PK
+        datetime order_datetime
+        date order_date FK
+        boolean morning FK
+        int book_id FK
+        int customer_id FK
+        int employee_id FK
+        decimal total_amount
+    }
+
+    sales {
+        int sale_id PK
+        int order_id FK
+        decimal amount
+        datetime transaction_datetime
+        date transaction_date FK
+        boolean morning FK
+        string payment_method
+    }
+
+    customer {
+        int customer_id PK
+        string first_name
+        string last_name
+        string phone_number
+    }
+
+    book {
+        int book_id PK
+        string title
+        string author
+        decimal price
+        string isbn
+        int quantity_in_stock
+    }
+
+    date_dim {
+        date date_id PK
+        boolean morning PK
+        int year
+        int month
+        int day
+        string day_of_week
+        int quarter
+        boolean is_weekend
+        boolean is_holiday
+        string season
+    }
+
+    employee ||--o{ employee : "reports_to"
+    book ||--o{ orders : "has"
+    customer ||--o{ orders : "places"
+    employee ||--o{ orders : "processes"
+    orders ||--o{ sales : "generates"
+```
+
 
 #### Prompt 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2? 
 
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
-```
-Your answer...
-```
+```mermaid
+erDiagram
+    customer_address_type_1{
+        int customer_id PK,FK
+        string address_line
+        string city
+        string postal_code
+        string country
+    }
 
+    customer_address_type_2{
+        int address_id PK
+        int customer_id FK
+        date valid_from
+        date valid_to
+        boolean is_current
+        string address_line
+        string city
+        string postal_code
+        string country
+    }
+```
 ***
 
 ## Section 2:
