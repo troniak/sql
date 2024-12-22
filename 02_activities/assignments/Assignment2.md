@@ -120,10 +120,10 @@ erDiagram
         string last_name
     }
 
-    employee_shifts{
-        int employee_id PK,FK
-        date shift_date PK,FK
-        boolean morning PK,FK
+    employee_shifts {
+        int employee_id PK, FK
+        date shift_date PK
+        boolean morning PK
     }
 
     orders {
@@ -177,12 +177,14 @@ erDiagram
     }
 
     employee ||--o{ employee : "reports_to"
+    employee ||--o{ employee_shifts : "works"
     book ||--o{ orders : "has"
     customer ||--o{ orders : "places"
     employee ||--o{ orders : "processes"
     orders ||--o{ sales : "generates"
+    date_dim ||--o{ orders : "dates"
+    date_dim ||--o{ employee_shifts : "scheduled"
 ```
-
 
 #### Prompt 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2? 
